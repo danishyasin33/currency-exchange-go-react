@@ -29,7 +29,7 @@ func GetExchangeRate() ExchangeRateResponse {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
-		os.Exit(1) // not a fan but just getting it done
+		return ExchangeRateResponse{} // not a fan but just getting it done
 	}
 
 	exchangeRateApiKey := os.Getenv("EXCHANGE_RATE_API_KEY")
@@ -38,19 +38,19 @@ func GetExchangeRate() ExchangeRateResponse {
 	req, err := http.NewRequest(http.MethodGet, requestUrl, nil)
 	if err != nil {
 		fmt.Printf("client: could not create request: %s\n", err)
-		os.Exit(1) // not a fan but just getting it done
+		return ExchangeRateResponse{} // not a fan but just getting it done
 	}
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Printf("client: error making http request: %s\n", err)
-		os.Exit(1) // not a fan but just getting it done
+		return ExchangeRateResponse{} // not a fan but just getting it done
 	}
 
 	resBody, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Printf("client: could not read response body: %s\n", err)
-		os.Exit(1) // not a fan but just getting it done
+		return ExchangeRateResponse{} // not a fan but just getting it done
 	}
 
 	parsedResponse := &ExchangeRateResponse{}
@@ -59,7 +59,7 @@ func GetExchangeRate() ExchangeRateResponse {
 
 	if err != nil {
 		fmt.Printf("client: could not parse body: %s\n", err)
-		os.Exit(1) // not a fan but just getting it done
+		return ExchangeRateResponse{} // not a fan but just getting it done
 	}
 
 	return *parsedResponse

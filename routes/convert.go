@@ -30,6 +30,10 @@ func isValidCurrency(currency string) bool {
 	return false
 }
 
+// TODO: break it down into smaller methods
+// move validation to it's own package
+// clean up conversion code by moving to own method
+// figure out a way to use rates method to fetch rates instead of using the cache here for the best separation of concerns
 func GetConvertHandler(c *cache.Cache) gin.HandlerFunc {
 	coreFunc := func(context *gin.Context) {
 		// there should be a better way to handle all three errors simultaneously so user can see all three at once instead of one by one. Not focusing on that for now
